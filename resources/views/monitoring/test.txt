@@ -1,0 +1,587 @@
+@extends('layouts')
+@section('content')
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js CDN for data visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom styles -->
+    <style>
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-on {
+            background-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+        .status-off {
+            background-color: #ef4444;
+        }
+        .pump-button.pressed {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+        .log-entry {
+            padding: 4px 8px;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 4px;
+            background-color: #f8fafc;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+    <div class="container mx-auto p-6">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-tint text-blue-500 mr-2"></i>
+                Sistem Monitoring Aquaponik
+            </h1>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div id="connection-status" class="status-indicator status-off"></div>
+                    <span id="connection-text" class="text-gray-600">Disconnected</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                    Last update: <span id="last-update">Never</span>
+                </div>
+            </div>
+        </div>
+        <!-- Control Buttons -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                    <i class="fas fa-tools text-gray-500 mr-2"></i>
+                    System Controls
+                </h3>
+                <div class="space-y-3">
+                    <button id="test-fake-data" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fas fa-play mr-2"></i>
+                        Start Demo
+                    </button>
+                    <button id="refresh-data" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        Refresh Data
+                    </button>
+                    <button id="export-data" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i>
+                        Export Data
+                    </button>
+                </div>
+            </div>
+            
+        <!-- Sensor Data Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <!-- pH Level Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-flask text-green-500 mr-2"></i>
+                        pH Level
+                    </h3>
+                    <span id="ph-value" class="text-2xl font-bold text-green-600">7.0</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="ph-bar" class="bg-green-500 h-2.5 rounded-full progress-bar" style="width: 50%"></div>
+                </div>
+                <div id="ph-advice" class="mt-2 text-sm text-gray-600">Optimal range: 6.5 - 7.5</div>
+            </div>
+
+            <!-- Temperature Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-thermometer-half text-red-500 mr-2"></i>
+                        Temperature
+                    </h3>
+                    <span id="suhu-value" class="text-2xl font-bold text-red-600">25°C</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="suhu-bar" class="bg-red-500 h-2.5 rounded-full progress-bar" style="width: 60%"></div>
+                </div>
+                <div class="mt-2 text-sm text-gray-600">Optimal range: 20°C - 30°C</div>
+            </div>
+
+            <!-- TDS Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-water text-blue-500 mr-2"></i>
+                        TDS Level
+                    </h3>
+                    <span id="tds-value" class="text-2xl font-bold text-blue-600">300 ppm</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="tds-bar" class="bg-blue-500 h-2.5 rounded-full progress-bar" style="width: 40%"></div>
+                </div>
+                <div class="mt-2 text-sm text-gray-600">Optimal range: 200 - 800 ppm</div>
+            </div>
+        </div>
+
+        <!-- Pump Control Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Pump Control Panel -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                    <i class="fas fa-cogs text-purple-500 mr-2"></i>
+                    Pump Control
+                </h3>
+                
+                <!-- Mode Selection -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Mode:</span>
+                        <span id="mode-indicator" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Auto</span>
+                    </div>
+                    <button id="auto-mode" class="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        Switch to Manual
+                    </button>
+                </div>
+
+                <!-- Pump 1 Control -->
+                <div class="mb-4 p-4 border border-gray-200 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <div id="pump1-indicator" class="status-indicator status-off"></div>
+                            <span class="font-medium">Pump 1</span>
+                        </div>
+                        <span id="pump1-status-text" class="text-sm text-gray-600">Nonaktif</span>
+                    </div>
+                    <button id="toggle-pump1" class="pump-button bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full mb-2">
+                        OFF
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <input id="duration-pump1" type="number" min="1" max="300" value="30" class="flex-1 px-3 py-1 border border-gray-300 rounded text-sm">
+                        <span class="text-sm text-gray-600">seconds</span>
+                        <button id="manual-trigger-pump1" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pump 2 Control -->
+                <div class="mb-4 p-4 border border-gray-200 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <div id="pump2-indicator" class="status-indicator status-off"></div>
+                            <span class="font-medium">Pump 2</span>
+                        </div>
+                        <span id="pump2-status-text" class="text-sm text-gray-600">Nonaktif</span>
+                    </div>
+                    <button id="toggle-pump2" class="pump-button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full mb-2">
+                        OFF
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <input id="duration-pump2" type="number" min="1" max="300" value="30" class="flex-1 px-3 py-1 border border-gray-300 rounded text-sm">
+                        <span class="text-sm text-gray-600">seconds</span>
+                        <button id="manual-trigger-pump2" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Log -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-list text-yellow-500 mr-2"></i>
+                        System Log
+                    </h3>
+                    <button id="clear-log" class="text-red-500 hover:text-red-700 text-sm">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+                <div class="h-64 overflow-y-auto">
+                    <ul id="status-log" class="space-y-1">
+                        <!-- Log entries will be added here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- History and Controls -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Pump History -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                    <i class="fas fa-history text-indigo-500 mr-2"></i>
+                    Recent Activity
+                </h3>
+                <div id="pump-history" class="space-y-2 max-h-48 overflow-y-auto">
+                    <!-- History entries will be added here -->
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <!-- Your original JavaScript with CDN dependencies -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuration
+    const CONFIG = {
+        UPDATE_INTERVAL: 5000,
+        CHART_MAX_POINTS: 20,
+        LOG_MAX_ENTRIES: 50,
+        HISTORY_MAX_ENTRIES: 15,
+        FAKE_DATA_DURATION: 60000,
+        API_URL: '/monitoring/data', // Simplified for demo
+        PUMP_API_URL: '/monitoring/pump/',
+        ERROR_RETRY_DELAY: 5000,
+        MAX_RETRIES: 3
+    };
+    
+    // DOM Elements
+    const elements = {
+        // Values
+        phValue: document.getElementById('ph-value'),
+        suhuValue: document.getElementById('suhu-value'),
+        tdsValue: document.getElementById('tds-value'),
+        
+        // Progress bars
+        phBar: document.getElementById('ph-bar'),
+        suhuBar: document.getElementById('suhu-bar'),
+        tdsBar: document.getElementById('tds-bar'),
+        
+        // Pump indicators
+        pump1Indicator: document.getElementById('pump1-indicator'),
+        pump2Indicator: document.getElementById('pump2-indicator'),
+        pump1StatusText: document.getElementById('pump1-status-text'),
+        pump2StatusText: document.getElementById('pump2-status-text'),
+        
+        // Buttons
+        togglePump1: document.getElementById('toggle-pump1'),
+        togglePump2: document.getElementById('toggle-pump2'),
+        autoModeButton: document.getElementById('auto-mode'),
+        manualTriggerPump1: document.getElementById('manual-trigger-pump1'),
+        manualTriggerPump2: document.getElementById('manual-trigger-pump2'),
+        testFakeDataButton: document.getElementById('test-fake-data'),
+        refreshButton: document.getElementById('refresh-data'),
+        exportButton: document.getElementById('export-data'),
+        clearLogButton: document.getElementById('clear-log'),
+        
+        // Inputs
+        durationPump1: document.getElementById('duration-pump1'),
+        durationPump2: document.getElementById('duration-pump2'),
+        
+        // Containers
+        statusLog: document.getElementById('status-log'),
+        pumpHistory: document.getElementById('pump-history'),
+        phAdvice: document.getElementById('ph-advice'),
+        connectionStatus: document.getElementById('connection-status'),
+        connectionText: document.getElementById('connection-text'),
+        lastUpdate: document.getElementById('last-update'),
+        modeIndicator: document.getElementById('mode-indicator')
+    };
+    
+    // State management
+    const state = {
+        autoMode: true,
+        isOnline: false,
+        demoMode: false,
+        currentData: null,
+        pump1Status: false,
+        pump2Status: false,
+        fakeDataInterval: null,
+        updateInterval: null,
+        chartData: [],
+        logEntries: [],
+        historyEntries: []
+    };
+    
+    // Utility Functions
+    const utils = {
+        formatTime: (date = new Date()) => {
+            return date.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+        },
+        
+        formatDateTime: (date = new Date()) => {
+            return date.toLocaleString('id-ID');
+        },
+        
+        generateId: () => {
+            return Math.random().toString(36).substr(2, 9);
+        },
+        
+        clamp: (value, min, max) => {
+            return Math.min(Math.max(value, min), max);
+        },
+        
+        isInRange: (value, range) => {
+            return value >= range[0] && value <= range[1];
+        },
+        
+        getStatusColor: (value, range) => {
+            if (utils.isInRange(value, range)) return 'text-green-600';
+            if (value < range[0]) return 'text-yellow-600';
+            return 'text-red-600';
+        },
+        
+        exportData: () => {
+            const data = {
+                timestamp: new Date().toISOString(),
+                currentData: state.currentData,
+                chartData: state.chartData,
+                logEntries: state.logEntries,
+                historyEntries: state.historyEntries
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `aquaponics-data-${new Date().toISOString().slice(0, 19)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    };
+    
+    // Send pump command to server
+    const sendPumpCommand = async (pump, duration = null) => {
+        try {
+            const button = pump === 'pump1' ? elements.togglePump1 : elements.togglePump2;
+            button.classList.add('pressed');
+
+            // Simulate API call for demo purposes
+            logAction(`Sending command to ${pump.toUpperCase()}...`);
+            
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Toggle pump status for demo
+            const newStatus = pump === 'pump1' ? !state.pump1Status : !state.pump2Status;
+            updatePumpStatus(pump, newStatus);
+
+            // Remove pressed state after delay
+            setTimeout(() => {
+                button.classList.remove('pressed');
+            }, 300);
+        } catch (error) {
+            logError(error.message);
+
+            // Ensure button state is reset even on error
+            setTimeout(() => {
+                button.classList.remove('pressed');
+            }, 300);
+        }
+    };
+
+    // Function to toggle demo mode
+    const startDemo = () => {
+        state.demoMode = !state.demoMode;
+        elements.testFakeDataButton.innerHTML = state.demoMode ? 
+            '<i class="fas fa-stop mr-2"></i>Stop Demo' : 
+            '<i class="fas fa-play mr-2"></i>Start Demo';
+
+        if (state.demoMode) {
+            logAction('Demo mode started');
+            simulateFakeData();
+        } else {
+            logAction('Demo mode stopped');
+            clearInterval(state.demoInterval);
+        }
+    };
+
+    // Simulate fake data
+    const simulateFakeData = () => {
+        state.demoInterval = setInterval(() => {
+            const randomPump1Status = Math.random() < 0.5;
+            const randomPump2Status = Math.random() < 0.5;
+
+            updatePumpStatus('pump1', randomPump1Status);
+            updatePumpStatus('pump2', randomPump2Status);
+
+            const randomTds = Math.floor(Math.random() * 600 + 200);
+            const randomTemperature = Math.floor(Math.random() * 15 + 20);
+            const randomPhLevel = (Math.random() * 2 + 6).toFixed(1);
+
+            elements.phValue.textContent = randomPhLevel;
+            elements.suhuValue.textContent = `${randomTemperature}°C`;
+            elements.tdsValue.textContent = `${randomTds} ppm`;
+
+            // Update progress bars
+            const phPercent = ((parseFloat(randomPhLevel) - 6) / 2) * 100;
+            const tempPercent = ((randomTemperature - 20) / 10) * 100;
+            const tdsPercent = ((randomTds - 200) / 600) * 100;
+
+            elements.phBar.style.width = `${Math.max(0, Math.min(100, phPercent))}%`;
+            elements.suhuBar.style.width = `${Math.max(0, Math.min(100, tempPercent))}%`;
+            elements.tdsBar.style.width = `${Math.max(0, Math.min(100, tdsPercent))}%`;
+
+            // Update connection status
+            elements.connectionStatus.className = 'status-indicator status-on';
+            elements.connectionText.textContent = 'Connected (Demo)';
+            elements.lastUpdate.textContent = utils.formatTime();
+
+            logAction(`Simulated data updated: TDS ${randomTds} ppm, Temperature ${randomTemperature}°C, pH ${randomPhLevel}`);
+        }, 3000);
+    };
+
+    // Button Interaction Handlers
+    const initButtonInteractions = () => {
+        // Handle pump button toggles
+        elements.togglePump1.addEventListener('click', () => {
+            if (state.autoMode) return;
+            sendPumpCommand('pump1');
+        });
+
+        elements.togglePump2.addEventListener('click', () => {
+            if (state.autoMode) return;
+            sendPumpCommand('pump2');
+        });
+
+        // Auto mode toggle
+        elements.autoModeButton.addEventListener('click', () => {
+            state.autoMode = !state.autoMode;
+            elements.modeIndicator.textContent = state.autoMode ? 'Auto' : 'Manual';
+            elements.autoModeButton.textContent = state.autoMode ? 'Switch to Manual' : 'Switch to Auto';
+            
+            if (state.autoMode) {
+                elements.modeIndicator.className = 'px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm';
+            } else {
+                elements.modeIndicator.className = 'px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm';
+            }
+            
+            logAction(`Mode switched to ${state.autoMode ? 'Auto' : 'Manual'}`);
+        });
+
+        // Manual trigger buttons
+        elements.manualTriggerPump1.addEventListener('click', () => {
+            const duration = parseInt(elements.durationPump1.value);
+            logAction(`Manual trigger Pump 1 for ${duration} seconds`);
+            sendPumpCommand('pump1', duration);
+        });
+
+        elements.manualTriggerPump2.addEventListener('click', () => {
+            const duration = parseInt(elements.durationPump2.value);
+            logAction(`Manual trigger Pump 2 for ${duration} seconds`);
+            sendPumpCommand('pump2', duration);
+        });
+
+        // Handle demo button click
+        elements.testFakeDataButton.addEventListener('click', startDemo);
+
+        // Refresh button
+        elements.refreshButton.addEventListener('click', () => {
+            logAction('Data refresh requested');
+            elements.lastUpdate.textContent = utils.formatTime();
+        });
+
+        // Export button
+        elements.exportButton.addEventListener('click', () => {
+            utils.exportData();
+            logAction('Data exported');
+        });
+
+        // Clear log button
+        elements.clearLogButton.addEventListener('click', () => {
+            elements.statusLog.innerHTML = '';
+            state.logEntries = [];
+            logAction('Log cleared');
+        });
+    };
+
+    // Update pump status indicators
+    const updatePumpStatus = (pump, status) => {
+        const indicator = pump === 'pump1' ? elements.pump1Indicator : elements.pump2Indicator;
+        const statusText = pump === 'pump1' ? elements.pump1StatusText : elements.pump2StatusText;
+        const button = pump === 'pump1' ? elements.togglePump1 : elements.togglePump2;
+
+        indicator.className = `status-indicator ${status ? 'status-on' : 'status-off'}`;
+        statusText.textContent = status ? 'Aktif' : 'Nonaktif';
+        button.textContent = status ? 'ON' : 'OFF';
+        button.className = `pump-button ${status ? 
+            (pump === 'pump1' ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600') : 
+            (pump === 'pump1' ? 'bg-red-500 hover:bg-red-600' : 'bg-indigo-500 hover:bg-indigo-600')
+        } text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full`;
+
+        if (pump === 'pump1') {
+            state.pump1Status = status;
+        } else {
+            state.pump2Status = status;
+        }
+
+        logAction(`${pump.toUpperCase()} status changed to ${status ? 'Active' : 'Inactive'}`);
+    };
+
+    // Logging functions
+    const logAction = (message) => {
+        const entry = document.createElement('li');
+        entry.className = 'log-entry text-gray-600';
+        entry.innerHTML = `<span class="text-blue-500">[${utils.formatTime()}]</span> ${message}`;
+        elements.statusLog.prepend(entry);
+
+        // Add to history
+        state.historyEntries.unshift({
+            id: utils.generateId(),
+            timestamp: new Date(),
+            message
+        });
+
+        // Limit log entries
+        if (elements.statusLog.children.length > CONFIG.LOG_MAX_ENTRIES) {
+            elements.statusLog.removeChild(elements.statusLog.lastChild);
+        }
+
+        // Update history display
+        updateHistoryDisplay();
+    };
+
+    const logError = (message) => {
+        const entry = document.createElement('li');
+        entry.className = 'log-entry text-red-600';
+        entry.innerHTML = `<span class="text-blue-500">[${utils.formatTime()}]</span> ERROR: ${message}`;
+        elements.statusLog.prepend(entry);
+
+        // Limit log entries
+        if (elements.statusLog.children.length > CONFIG.LOG_MAX_ENTRIES) {
+            elements.statusLog.removeChild(elements.statusLog.lastChild);
+        }
+    };
+
+    const updateHistoryDisplay = () => {
+        elements.pumpHistory.innerHTML = '';
+        state.historyEntries.slice(0, CONFIG.HISTORY_MAX_ENTRIES).forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center justify-between text-sm py-1 border-b border-gray-100';
+            item.innerHTML = `
+                <div class="flex items-center">
+                    <span class="text-gray-500">${utils.formatTime(entry.timestamp)}</span>
+                    <span class="ml-2">${entry.message}</span>
+                </div>
+            `;
+            elements.pumpHistory.appendChild(item);
+        });
+    };
+
+    // Initialization
+    const init = () => {
+        initButtonInteractions();
+        logAction('Aquaponics monitoring system ready');
+        
+        // Set initial connection status
+        elements.connectionStatus.className = 'status-indicator status-off';
+        elements.connectionText.textContent = 'Disconnected';
+        elements.lastUpdate.textContent = 'Never';
+    };
+
+    init();
+});
+    </script>
+@endsection
