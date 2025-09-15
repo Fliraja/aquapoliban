@@ -85,8 +85,8 @@
             <!-- pH -->
             <div class="p-4 bg-emerald-50 rounded-lg">
                 <div class="flex items-center justify-between">
-                    <span class="font-medium text-gray-600">pH Air</span>
-                    <i class="fas fa-water text-blue-500"></i>
+                    <span class="font-medium text-gray-600">pH Tanah</span>
+                    <i class="fas fa-seeding text-blue-500"></i>
                 </div>
                 <div id="ph" class="text-3xl font-bold mt-2">-</div>
                 <div class="text-sm text-gray-500 mt-1">Optimal: 6.3 - 7.5</div>
@@ -1195,7 +1195,7 @@ function showTempActionGuide(tempValue, condition) {
                     ...chartOptions.plugins,
                     title: {
                         display: true,
-                        text: 'Tingkat pH Air',
+                        text: 'Tingkat pH Tanah',
                         font: {
                             size: 16,
                             weight: 'bold'
