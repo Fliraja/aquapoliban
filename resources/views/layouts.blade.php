@@ -167,14 +167,13 @@
         <!-- Logo Section -->
         <a href="/" class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg p-1">
           <div class="relative transition-all duration-500 group-hover:scale-110">
-            <div class="h-8 w-8 sm:h-10 sm:w-10 bg-primary/10 rounded-full flex items-center justify-center">
-              <i class="fas fa-leaf text-primary text-base sm:text-lg"></i>
+            <div>
+              <img src="/images/LOGO PT. JBG.png" alt="Logo PT. JBG" class="h-20 w-28 sm:h-24 sm:w-32 object-contain" />
             </div>
-            <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur-sm opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
           </div>
           <div class="font-bold leading-tight">
-            <span class="text-gray-800 block text-base sm:text-lg">SISTEM MONITORING TANAH</span>
-            <span class="text-primary font-serif text-xs sm:text-sm tracking-wide">POLIBAN</span>
+            <span class="text-gray-800 block text-base sm:text-lg">SISTEM MONITORING</span>
+            <span class="text-primary font-serif text-xs sm:text-sm tracking-wide">TANAH</span>
           </div>
         </a>
 
@@ -501,13 +500,13 @@
         <!-- About Section -->
         <div>
           <div class="flex items-center space-x-3 mb-4">
-            <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-              <i class="fas fa-leaf text-primary text-lg"></i>
+            <div>
+              <img src="/images/LOGO PT. JBG.png" alt="Logo PT. JBG" class="h-14 w-24 object-contain" />
             </div>
-            <h3 class="text-xl font-bold text-white">Smart Aquaponik</h3>
+            <h3 class="text-2xl font-bold text-white">Sistem Monitoring Tanah</h3>
           </div>
           <p class="text-gray-400 mb-6">
-            Inovasi sistem aquaponik berbasis IoT untuk pertanian berkelanjutan yang ramah lingkungan dan efisien.
+            Inovasi sistem monitoring tanah berbasis IoT untuk pertanian berkelanjutan yang ramah lingkungan dan efisien.
           </p>
           <div class="flex space-x-4">
             <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
@@ -601,7 +600,7 @@
           <a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a>
           <a href="#" class="text-gray-400 hover:text-white transition-colors">Karir</a>
         </div>
-        <p class="text-gray-500">&copy; 2025 Smart Aquaponik Poliban. Hak Cipta Dilindungi.</p>
+        <p class="text-gray-500">&copy; 2025 Sistem Monitoring Tanah. Hak Cipta Dilindungi.</p>
       </div>
     </div>
   </footer>

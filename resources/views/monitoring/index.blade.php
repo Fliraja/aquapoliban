@@ -63,8 +63,8 @@
         <!-- Header -->
         <header class="text-center py-8">
             <div class="flex items-center justify-center gap-3">
-                <div class="bg-emerald-100 p-3 rounded-full">
-                    <i class="fas fa-leaf text-emerald-600 text-3xl"></i>
+                <div>
+                    <img src="/images/LOGO PT. JBG.png" alt="Logo PT. JBG" class="h-20 w-28 object-contain" />
                 </div>
                 <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Sistem Monitoring Tanah</h1>
             </div>
