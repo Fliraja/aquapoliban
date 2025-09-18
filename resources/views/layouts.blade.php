@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Aquaponik Poliban</title>
-  
+  <title>SISTEM Monitoring Tanah</title>
+
   <!-- Optimized CDN usage -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  
+
   <!-- Font Awesome CDN with version pinning -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+
   <!-- Alpine.js for lightweight interactivity -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.0/cdn.min.js" integrity="sha512-Y/8PQihZFQVR02Q9/JpuYltFV5R2Pg5nr6Lf0jLpP6uGzGj/9yxPm/tjAYXePFzwYlXLR+Vv++qs3yMVtyKSbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
+
   <!-- Tailwind CSS with better caching -->
   <script src="https://cdn.tailwindcss.com?v=3.3.3"></script>
-  
+
   <!-- AOS animations with integrity checks -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -56,7 +56,7 @@
               900: '#08120d',
             },
             accent: {
-              DEFAULT: '#00C2CB', 
+              DEFAULT: '#00C2CB',
               50: '#e6f9fa',
               100: '#ccf2f5',
               200: '#99e6eb',
@@ -82,7 +82,7 @@
       }
     }
   </script>
-  
+
   <!-- Custom Styles -->
   <style>
     /* Better Scrollbar */
@@ -90,46 +90,46 @@
       width: 8px;
       height: 8px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: #f1f1f1;
       border-radius: 10px;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: #00aa13;
       border-radius: 10px;
     }
-    
+
     ::-webkit-scrollbar-thumb:hover {
       background: #285943;
     }
-    
+
     /* Smooth scrolling */
     html {
       scroll-behavior: smooth;
     }
-    
+
     /* Animation Classes */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-    
+
     .animate-float {
       animation: float 3s ease-in-out infinite;
     }
-    
+
     @keyframes pulse-glow {
       0% { box-shadow: 0 0 8px rgba(0, 194, 203, 0.3); }
       50% { box-shadow: 0 0 16px rgba(0, 194, 203, 0.6); }
       100% { box-shadow: 0 0 8px rgba(0, 194, 203, 0.3); }
     }
-    
+
     .pulse-glow {
       animation: pulse-glow 2s infinite;
     }
-    
+
     /* Skip to content - accessibility */
     .skip-link {
       position: absolute;
@@ -141,11 +141,11 @@
       z-index: 100;
       transition: top 0.3s;
     }
-    
+
     .skip-link:focus {
       top: 0;
     }
-    
+
     /* Better focus styles */
     a:focus, button:focus {
       outline: 2px solid #00aa13;
@@ -154,12 +154,12 @@
   </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col" 
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col"
       x-data="{mobileMenuOpen: false, chatOpen: false}">
-  
+
   <!-- Accessibility skip link -->
   <a href="#main-content" class="skip-link">Skip to content</a>
-  
+
   <!-- Enhanced Navigation -->
   <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300">
     <nav class="container mx-auto px-4 py-2 sm:py-3 md:py-4">
@@ -173,34 +173,34 @@
             <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur-sm opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
           </div>
           <div class="font-bold leading-tight">
-            <span class="text-gray-800 block text-base sm:text-lg">SMART AQUAPONIK</span>
+            <span class="text-gray-800 block text-base sm:text-lg">SISTEM MONITORING TANAH</span>
             <span class="text-primary font-serif text-xs sm:text-sm tracking-wide">POLIBAN</span>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
         <div class="hidden md:flex items-center space-x-6">
-          <a href="/" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
+          <!-- <a href="/" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
             Beranda
-          </a>
+          </a> -->
           <a href="/monitoring" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
             Monitoring
           </a>
-          <a href="/about" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
+          <!-- <a href="/about" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
             Tentang Kami
           </a>
           <a href="/contact" class="nav-link relative px-2 py-1 font-medium text-gray-700 hover:text-primary transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300">
             Kontak
-          </a>
-          
+          </a> -->
+
           <!-- CTA Button with better accessibility -->
-          
+
         </div>
-        
-        
+
+
       </div>
-      
-      
+
+
       </div>
     </nav>
   </header>
@@ -208,19 +208,19 @@
   <!-- App-style Bottom Navigation for Mobile -->
   <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg py-2 px-3 z-40">
     <div class="flex justify-around items-center">
-      <a href="/" class="flex flex-col items-center space-y-1 text-primary transition-colors">
+      <!-- <a href="/" class="flex flex-col items-center space-y-1 text-primary transition-colors">
         <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center">
           <i class="fas fa-home text-primary"></i>
         </div>
         <span class="text-xs text-gray-700 font-medium">Beranda</span>
-      </a>
+      </a> -->
       <a href="/monitoring" class="flex flex-col items-center space-y-1 text-gray-500 hover:text-primary transition-colors">
         <div class="w-10 h-10 rounded-full bg-gray-100 hover:bg-primary-50 flex items-center justify-center">
           <i class="fas fa-chart-line"></i>
         </div>
         <span class="text-xs text-gray-700 font-medium">Monitor</span>
       </a>
-<a href="/contact" class="flex flex-col items-center space-y-1 text-gray-500 hover:text-primary transition-colors relative group">
+<!-- <a href="/contact" class="flex flex-col items-center space-y-1 text-gray-500 hover:text-primary transition-colors relative group">
   <!-- Icon bulat -->
   <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-primary-100 flex items-center justify-center relative">
     <i class="fas fa-envelope text-lg"></i>
@@ -240,19 +240,19 @@
           <i class="fas fa-info-circle"></i>
         </div>
         <span class="text-xs text-gray-700 font-medium">Tentang</span>
-      </a>
+      </a> -->
     </div>
   </div>
 
-<div 
+<div
   x-data="{ chatOpen: false }"
   x-cloak
   class="chat-widget"
 >
   {{-- <!-- Chat Toggle Button -->
   <div class="fixed right-7 bottom-20 md:bottom-6 z-50">
-    <button 
-      @click="chatOpen = true" 
+    <button
+      @click="chatOpen = true"
       x-show="!chatOpen"
       x-transition:enter="transition ease-out duration-300"
       x-transition:enter-start="opacity-0 scale-95"
@@ -265,8 +265,8 @@
   </div>
 
   <!-- Chat Window -->
-  <div 
-    x-show="chatOpen" 
+  <div
+    x-show="chatOpen"
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 scale-95"
     x-transition:enter-end="opacity-100 scale-100"
@@ -285,8 +285,8 @@
         <h3 class="font-bold text-lg">AquaBot</h3>
         <p class="text-xs text-primary-100">Online & siap membantu</p>
       </div>
-      <button 
-        @click="chatOpen = false" 
+      <button
+        @click="chatOpen = false"
         class="ml-auto text-white hover:text-accent bg-white/20 w-8 h-8 rounded-full flex items-center justify-center"
         aria-label="Close chat"
       >
@@ -305,7 +305,7 @@
           <p class="text-sm">Halo! Saya AquaBot, asisten virtual untuk Smart Aquaponik Poliban. Ada yang bisa saya bantu terkait sistem aquaponik kami?</p>
         </div>
       </div>
-      
+
       <div class="flex items-start space-x-2 animate-fade-in">
         <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
           <i class="fas fa-robot text-primary"></i>
@@ -333,15 +333,15 @@
     <!-- Input Area -->
     <div class="p-3 border-t border-gray-200 bg-white">
       <form id="chatForm" class="flex space-x-2">
-        <input 
-          type="text" 
-          id="chatInput" 
-          placeholder="Ketik pesan..." 
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Ketik pesan..."
           class="flex-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           autocomplete="off"
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           class="bg-primary text-white p-3 rounded-xl hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
           aria-label="Send message"
         >
@@ -350,25 +350,26 @@
       </form>
     </div>
   </div>
-</div>
+</div> --}}
+
 
 <!-- Script modifications for more reliable chat functionality -->
-<script>
+{{-- <script>
   document.addEventListener('DOMContentLoaded', () => {
     // Check if Alpine.js is initialized properly
     if (typeof Alpine === 'undefined') {
       console.warn('Alpine.js is not loaded. Falling back to vanilla JavaScript for chat functionality.');
-      
+
       // Vanilla JavaScript fallback
       const chatToggleBtn = document.querySelector('[aria-label="Open chat"]');
       const chatCloseBtn = document.querySelector('[aria-label="Close chat"]');
       const chatWindow = document.querySelector('.fixed.right-6.bottom-20.md\\:bottom-6.w-80.md\\:w-96.z-50');
-      
+
       // Ensure chat is closed initially
       if (chatWindow) {
         chatWindow.style.display = 'none';
       }
-      
+
       if (chatToggleBtn) {
         chatToggleBtn.addEventListener('click', function() {
           if (chatWindow) {
@@ -377,7 +378,7 @@
           }
         });
       }
-      
+
       if (chatCloseBtn) {
         chatCloseBtn.addEventListener('click', function() {
           if (chatWindow) {
@@ -387,18 +388,18 @@
         });
       }
     }
-    
+
     // Enhanced chat functionality
     const chatForm = document.getElementById('chatForm');
     const chatInput = document.getElementById('chatInput');
     const chatMessages = document.getElementById('chatMessages');
     const typingIndicator = document.getElementById('typingIndicator');
-    
+
     if (chatForm) {
       chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const message = chatInput.value.trim();
-        
+
         if (message) {
           // Add user message
           const userMessageElement = document.createElement('div');
@@ -414,21 +415,21 @@
           chatMessages.appendChild(userMessageElement);
           chatMessages.scrollTop = chatMessages.scrollHeight;
           chatInput.value = '';
-          
+
           // Show typing indicator
           typingIndicator.classList.remove('hidden');
-          
+
           // Simulate response after delay
           setTimeout(() => {
             // Hide typing indicator
             typingIndicator.classList.add('hidden');
-            
+
             // Add bot response based on message content
             let botResponse = '';
-            
+
             // Enhanced response logic with identity information
             const messageLower = message.toLowerCase();
-            
+
             if (messageLower.includes('siapa') && (messageLower.includes('kamu') || messageLower.includes('anda') || messageLower.includes('nama'))) {
               botResponse = 'Saya adalah AquaBot, asisten virtual untuk Smart Aquaponik Poliban. Saya dibuat oleh Muhammad Rasyad sebagai webdev ini. Ia juga yang menambahkan saya di sini. Semoga kehadiran saya dapat membantu Anda. Muhammad Rasyad adalah seorang mahasiswa Poliban prodi Teknik Informatika. Dia membuat bot ini dengan tujuan agar pengunjung bisa belajar dari web yang sedang ia kerjakan mengenai projek Smart Aquaponiks dan dia adalah peserta lulusan dari GoTo x Komdigi x Alibaba Gen AI.';
             } else if (messageLower.includes('halo') || messageLower.includes('hai') || messageLower.includes('hello')) {
@@ -454,7 +455,7 @@
             } else {
               botResponse = 'Terima kasih atas pertanyaan Anda. Saya AquaBot, asisten virtual untuk Smart Aquaponik Poliban. Untuk informasi lebih detail, silakan kunjungi halaman FAQ atau hubungi tim kami di +62-812-3456-7890.';
             }
-            
+
             const botMessageElement = document.createElement('div');
             botMessageElement.className = 'flex items-start space-x-2';
             botMessageElement.innerHTML = `
@@ -471,7 +472,7 @@
         }
       });
     }
-    
+
     // Escape HTML to prevent XSS
     function escapeHTML(str) {
       return str.replace(/[&<>"']/g, function(match) {
@@ -486,6 +487,7 @@
     }
   });
 </script> --}}
+ --}}
   <!-- Main Content Area -->
   <main class="flex-grow pt-20  md:pt-32" id="main-content">
     <!-- This is where your page content will go -->
@@ -527,10 +529,10 @@
         <div>
           <h4 class="text-lg font-semibold text-white mb-5 border-b border-gray-700 pb-2">Navigasi</h4>
           <ul class="space-y-3">
-            <li><a href="/" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Beranda</a></li>
+            <!-- <li><a href="/" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Beranda</a></li> -->
             <li><a href="/monitoring" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Monitoring</a></li>
-            <li><a href="/about" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Tentang Kami</a></li>
-            <li><a href="/contact" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Kontak</a></li>
+            <!-- <li><a href="/about" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Tentang Kami</a></li>
+            <li><a href="/contact" class="flex items-center text-gray-400 hover:text-primary transition-colors"><i class="fas fa-chevron-right mr-2 text-xs text-primary"></i> Kontak</a></li> -->
           </ul>
         </div>
 
@@ -575,14 +577,14 @@
           <h5 class="text-white font-semibold mb-3">Berlangganan Newsletter</h5>
           <p class="text-gray-400 mb-4">Dapatkan update terbaru tentang teknologi aquaponik dan tips budidaya langsung ke email Anda</p>
           <form class="flex flex-col sm:flex-row gap-2 justify-center">
-            <input 
-              type="email" 
-              placeholder="Alamat email Anda" 
+            <input
+              type="email"
+              placeholder="Alamat email Anda"
               class="px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary border border-gray-700 w-full sm:w-auto"
               required
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               class="bg-primary hover:bg-primary-600 text-white font-medium px-6 py-3 rounded-lg transition-colors shadow-sm"
             >
               Langganan
@@ -605,8 +607,8 @@
   </footer>
 
   <!-- Back To Top Button -->
-  <button 
-    id="backToTop" 
+  <button
+    id="backToTop"
     class="fixed bottom-24 right-6 z-30 bg-primary w-10 h-10 rounded-full text-white flex items-center justify-center shadow-lg transform transition-all duration-300 hover:scale-110 hover:bg-primary-600 opacity-0"
     aria-label="Back to top"
   >
@@ -623,10 +625,10 @@
         once: true,
         mirror: false
       });
-      
+
       // Back to top button
       const backToTopButton = document.getElementById('backToTop');
-      
+
       window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
           backToTopButton.classList.add('opacity-100');
@@ -636,7 +638,7 @@
           backToTopButton.classList.remove('opacity-100');
         }
       });
-      
+
       backToTopButton.addEventListener('click', () => {
         window.scrollTo({
           top: 0,
@@ -645,16 +647,16 @@
       });
 
       // Chat Functionality
-      const chatForm = document.getElementById('chatForm');
+      {{-- const chatForm = document.getElementById('chatForm');
       const chatInput = document.getElementById('chatInput');
       const chatMessages = document.getElementById('chatMessages');
       const typingIndicator = document.getElementById('typingIndicator');
-      
+
       if (chatForm) {
         chatForm.addEventListener('submit', function(e) {
           e.preventDefault();
           const message = chatInput.value.trim();
-          
+
           if (message) {
             // Add user message
             const userMessageElement = document.createElement('div');
@@ -670,18 +672,18 @@
             chatMessages.appendChild(userMessageElement);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             chatInput.value = '';
-            
+
             // Show typing indicator
             typingIndicator.classList.remove('hidden');
-            
+
             // Simulate response after delay
             setTimeout(() => {
               // Hide typing indicator
               typingIndicator.classList.add('hidden');
-              
+
               // Add bot response
               let botResponse = '';
-              
+
               // Simple response logic based on keywords
               if (message.toLowerCase().includes('halo') || message.toLowerCase().includes('hai') || message.toLowerCase().includes('hello')) {
                 botResponse = 'Halo! Ada yang bisa saya bantu terkait sistem aquaponik kami?';
@@ -694,7 +696,7 @@
               } else {
                 botResponse = 'Terima kasih atas pertanyaan Anda. Tim kami akan merespons segera. Untuk informasi lebih cepat, silakan kunjungi halaman FAQ atau hubungi kami di +62-812-3456-7890.';
               }
-              
+
               const botMessageElement = document.createElement('div');
               botMessageElement.className = 'flex items-start space-x-2';
               botMessageElement.innerHTML = `
@@ -711,7 +713,7 @@
           }
         });
       }
-      
+
       // Escape HTML to prevent XSS
       function escapeHTML(str) {
         return str.replace(/[&<>"']/g, function(match) {
@@ -723,11 +725,11 @@
             "'": '&#39;'
           }[match];
         });
-      }
-      
+      } --}}
+
       // Navbar scroll effect
       const header = document.querySelector('header');
-      
+
       window.addEventListener('scroll', () => {
         if (window.scrollY > 30) {
           header.classList.add('shadow-md');

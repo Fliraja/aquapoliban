@@ -1,6 +1,6 @@
 @extends('layouts')
 @section('content')
-    <title>Smart Aquaponik Monitoring</title>
+    <title>Sistem Monitoring Tanah</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Tailwind CSS CDN -->
@@ -66,9 +66,9 @@
                 <div class="bg-emerald-100 p-3 rounded-full">
                     <i class="fas fa-leaf text-emerald-600 text-3xl"></i>
                 </div>
-                <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Smart Aquaponik Monitoring</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Sistem Monitoring Tanah</h1>
             </div>
-            <p class="mt-2 text-gray-600">Monitoring real-time sistem aquaponik Anda</p>
+            <p class="mt-2 text-gray-600">Monitoring real-time kondisi tanah Anda</p>
         </header>
 <!-- Realtime Sensor Data -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
@@ -129,7 +129,7 @@
     <!--    <ul class="list-disc ml-5 text-sm mb-2">-->
     <!--        <li>Kesehatan dan metabolisme ikan (misalnya ikan nila atau lele).</li>-->
     <!--        <li>Efisiensi penyerapan nutrisi oleh tanaman.</li>-->
-    <!--        <li>Performa mikroorganisme dalam sistem aquaponik.</li>-->
+    <!--        <li>Performa mikroorganisme dalam sistem monitoring tanah.</li>-->
     <!--    </ul>-->
     <!--    <p class="text-sm font-medium mb-1">✅ <strong>Tindakan yang disarankan:</strong></p>-->
     <!--    <ul class="list-decimal ml-5 text-sm">-->
@@ -397,7 +397,7 @@
 
         <!-- Footer -->
         <footer class="text-center py-6 text-gray-500 text-sm border-t">
-            <p>© 2025 Smart Aquaponik Monitoring System | Dibuat oleh mahasiswa POLIBAN <i class="fas fa-heart text-red-500"></i> untuk pertanian modern</p>
+            <p>© 2025 Sistem Monitoring Tanah | Dibuat oleh mahasiswa POLIBAN <i class="fas fa-heart text-red-500"></i> untuk pertanian modern</p>
         </footer>
     </div>
 
