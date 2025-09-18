@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: aorus22/aquapoliban:latest
+    container_name: aquapoliban
+    restart: always
+    working_dir: /var/www/
+    env_file:
+      - .env
+    ports:
+      - 6671:80
+    depends_on:
+      - db
+    networks:
+      - aquapoliban_net
+
+  db:
+    image: mysql:8.0
+    container_name: aquapoliban-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: u1605572_aquaponik_poliban
+      MYSQL_USER: u1605572_aquaponik_poliban
+      MYSQL_PASSWORD: aquaponik_poliban
+    ports:
+      - 6672:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - aquapoliban_net
+
+volumes:
+  mysql-data:
+
+networks:
+  aquapoliban_net:
