@@ -40,8 +40,8 @@ Route::get('/', [MonitoringController::class, 'index'])->name('home');
 // Route::get('/ph-pump-history', [AquaponicController::class, 'showHistory']);
 
 // Endpoint untuk menerima data ESP32
-Route::post('/esp/sensor-data', [MonitoringController::class, 'receiveEspData'])
-    ->name('esp.receive_data');
+Route::post('/esp/sensor-data', [AquaponicController::class, 'updateRealtime'])
+    ->name('updateRealtime');
 
 // Jika Anda perlu proxy API tanpa auth:
 // Route::get('/api/sensor/{type}', [MonitoringController::class, 'getLiveData'])
