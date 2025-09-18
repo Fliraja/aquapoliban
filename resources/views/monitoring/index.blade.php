@@ -104,7 +104,7 @@
             <!-- Suhu -->
             <div class="p-4 bg-orange-50 rounded-lg">
                 <div class="flex items-center justify-between">
-                    <span class="font-medium text-gray-600">Suhu Air</span>
+                    <span class="font-medium text-gray-600">Suhu Tanah</span>
                     <i class="fas fa-thermometer-half text-orange-500"></i>
                 </div>
                 <div id="suhu" class="text-3xl font-bold mt-2">-</div>

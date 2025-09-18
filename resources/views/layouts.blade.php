@@ -494,7 +494,7 @@
 </main>
 
   <!-- Enhanced Footer -->
-  <footer class="bg-gray-900 text-gray-300 pt-12 pb-6 mt-auto">
+  {{-- <footer class="bg-gray-900 text-gray-300 pt-12 pb-6 mt-auto">
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         <!-- About Section -->
@@ -603,7 +603,7 @@
         <p class="text-gray-500">&copy; 2025 Sistem Monitoring Tanah. Hak Cipta Dilindungi.</p>
       </div>
     </div>
-  </footer>
+  </footer> --}}
 
   <!-- Back To Top Button -->
   <button
